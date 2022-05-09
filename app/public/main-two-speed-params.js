@@ -402,6 +402,7 @@ class Joke {
             // Generate the image if it doesn't exist
             if (!this.image) {
                 // Deploy the 'dom-to-image' script if it doesn't exist
+                //  it will make the 'domtoimage' variable available in the global scope.
                 if (!document.querySelector('head #dom-to-image')) {
                     await fetch('./assets/dom-to-image.min.js')
                         .then(response => {
