@@ -1,8 +1,16 @@
 # These are my custom scrips, commands and procedures
 
+## Reverse proxy for the app
+
 ```bash
-sudo a2proxy 'typewriter' '48001'
+sudo a2proxy 'typewriter' '48021'
 ```
+
+```bash
+sudo a2proxy 'typewriter' remove
+```
+
+## Docker container for the app
 
 ```bash
 docker-compose up -d
@@ -15,6 +23,8 @@ docker-compose down
 ```bash
 docker-prune.sh
 ```
+
+## [PM2](https://www.npmjs.com/package/pm2) service for the app
 
 ```bash
 pm2 start 'npm run watch' --name 'typewriter'
@@ -30,8 +40,4 @@ pm2 save
 pm2 stop 'typewriter'
 pm2 delete 'typewriter'
 pm2 save
-```
-
-```bash
-sudo a2proxy 'typewriter' remove
 ```
