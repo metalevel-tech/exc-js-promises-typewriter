@@ -34,11 +34,41 @@
             <div id="output" class="joke-container">
                 <div class="joke-canvas">
                     <pre class="joke"
-                        data-index="">Chuck Norris knows the last digit of pi. <span>I told him.</span></pre>
+                        data-index="">Click on the buttons or press the [space] key to start. You cannot interrupt the typing process, byt you can turn off the autoplay mode. Then use the arrow buttons or key to read already fetched jokes or press space or click on the middle button to fetch new.</pre>
                     <img src="./assets/joke-canvas.jpg" alt="" class="joke-canvas-after">
                 </div>
             </div>
         </div>
+        <script>
+            // This is just an initial resize of the font size, to make the page fit the container.
+            // main.js:Joke.prototype.fitJokeToContainer() does such resize over the particular jokes.
+            (function() {
+                const outputContainer = document.querySelector('#output.joke-container');
+                const outputJoke = document.querySelector('#output pre.joke');
+    
+                function fitJokeToContainer() { 
+                    const containerHeight = parseFloat(
+                        window.getComputedStyle(outputContainer, null).getPropertyValue('height')
+                    );
+                    
+                    const jokeHeight = parseFloat(
+                        window.getComputedStyle(outputJoke, null).getPropertyValue('height')
+                    );
+            
+                    let jokeFontSize = parseFloat(
+                        window.getComputedStyle(outputJoke, null).getPropertyValue('font-size')
+                    );
+            
+                    if (jokeHeight >= containerHeight) {
+                        jokeFontSize -= 0.1;
+                        outputJoke.style.fontSize = `${jokeFontSize}px`;
+            
+                        fitJokeToContainer();
+                    }
+                }
+                fitJokeToContainer();
+            })();
+        </script>
 
         <div class="nav grid-container">
             <div class="btn left-arrow nav-btn-left">&nbsp;</div>

@@ -2,9 +2,11 @@
   "name": "js-promises-typewriter",
   "version": "1.0.0",
   "description": "A simple JavaScript app, that I was create while I was learning JavaScript promises.",
-  "main": "app/server.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "supervisor server.js"
   },
   "repository": {
     "type": "git",
