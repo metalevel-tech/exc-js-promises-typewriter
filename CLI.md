@@ -5,7 +5,7 @@ Here is a list of my custom scrips, commands and procedures, related to the app 
 ## Reverse proxy for the app
 
 ```bash
-sudo a2proxy 'typewriter' '48021'
+sudo a2proxy 'typewriter' '48003'
 ```
 
 ```bash
@@ -13,6 +13,10 @@ sudo a2proxy 'typewriter' remove
 ```
 
 ## Docker container for the app
+
+```bash
+# docker run -p '48003':'48003' 'typewriter' -d
+```
 
 ```bash
 docker-compose up -d
@@ -27,6 +31,11 @@ docker-prune.sh
 ```
 
 ## [PM2](https://www.npmjs.com/package/pm2) service for the app
+
+```bash
+cd app/
+npm install
+```
 
 ```bash
 pm2 start 'npm run watch' --name 'typewriter'
