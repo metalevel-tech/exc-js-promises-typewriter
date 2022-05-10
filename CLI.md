@@ -1,4 +1,6 @@
-# These are my custom scrips, commands and procedures
+# Command-line
+
+Here is a list of my custom scrips, commands and procedures, related to the app deployment.
 
 ## Reverse proxy for the app
 
