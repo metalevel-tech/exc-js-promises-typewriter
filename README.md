@@ -23,3 +23,10 @@ There are two variants of the `main.js` file. The only difference is within the 
         await typeSingleCharacter(text[index], index, text);
     }
     ```
+Additional references:
+
+* [MDN: JS How to use promises](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Promises)
+
+* [MDN: JS How to implement a promise-based API](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Implementing_a_promise-based_API)
+
+* [MDN: JS Sequencing animations](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Sequencing_animations)
