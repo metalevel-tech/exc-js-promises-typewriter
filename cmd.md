@@ -1,7 +1,7 @@
 # These are my custom scrips, commands and procedures
 
 ```bash
-sudo a2proxy typewriter 48001
+sudo a2proxy 'typewriter' '48001'
 ```
 
 ```bash
@@ -33,5 +33,5 @@ pm2 save
 ```
 
 ```bash
-sudo a2proxy typewriter remove
+sudo a2proxy 'typewriter' remove
 ```
