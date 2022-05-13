@@ -16,7 +16,9 @@ const nodes = {
 
     autoplaySwitch: document.querySelector('.auto-play'),
     soundSwitch: document.querySelector('.sound-switch'),
-    imageSwitch: document.querySelector('.img-switch')
+    imageSwitch: document.querySelector('.img-switch'),
+
+    jokeSourceName: document.querySelector('#info .joke-source-name a')
 };
 
 const effectFadeOut = {
@@ -447,43 +449,52 @@ class Joke {
     static jokeList = [];
 
     static async fetchJoke() {
-        return fetch('https://api.icndb.com/jokes/random')
-            .then(response => {
-                if (!response.ok)
-                    throw new Error(
-                        `Network error: ${response.status} ${response.statusText}`
-                    );
-                return response.json();
-            })
-            .then(data => {
-                if (this.jokeList.find(joke => joke.id === data.value.id)) {
-                    this.fetchJoke(); // We have already fetched this joke, so we fetch another one
-                } else {
-                    const joke = Object.assign(new Joke(), data.value);
-                    const jokeListLength = this.jokeList.push(joke);
+        try {
+            const response = await fetch('https://api.icndb.com/jokes/random');
+            // if (!response.ok) throw new Error(`Network error: ${response}`);
 
-                    return new Promise((resolve, reject) => {
-                        // return the index of the last element
-                        resolve(jokeListLength - 1);
-                    });
-                }
+            const data = await response.json();
 
-            })
-            .catch(error => {
-                console.error(`We have a problem at fetchJoke(): ${error}`);
+            if (this.jokeList.find(joke => joke.id === data.value.id)) {
+                this.fetchJoke(); // We have already fetched this joke, so we fetch another one
+            } else {
+                const joke = Object.assign(new Joke(), data.value);
+                const jokeListLength = this.jokeList.push(joke);
+
+                return new Promise((resolve, reject) => {
+                    // return the index of the last element
+                    resolve(jokeListLength - 1);
+                });
+            }
+        }
+        catch (error) {
+            // console.error(`We have a problem at fetchJoke(): ${error.message}`);
+
+            return new Promise((resolve, reject) => {
+                // return the index of the last element
+                resolve(false);
             });
+        }
     }
 
     static async newJoke() {
         if (newJokeButton.resolve) {
             try {
                 const lastElementIndex = await this.fetchJoke();
-                this.jokeList[lastElementIndex].jokeType();
+                if (lastElementIndex) {
+                    this.jokeList[lastElementIndex].jokeType();
+                } else {
+                    throw new Error('API fetch error');
+                }
             } catch (error) {
                 // console.error(`We have a problem at newJoke(): ${error}`);
-                setTimeout(() => {
-                    this.newJoke();
-                }, 100);
+
+                if (error.message === 'API fetch error') {
+                    nodes.jokeSourceName.style.color = 'red';
+                    nodes.jokeSourceName.textContent += ' ...API fetch problem!';
+                } else {
+                    setTimeout(() => { this.newJoke(); }, 500);
+                }
             }
         }
     }
