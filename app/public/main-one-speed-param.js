@@ -418,7 +418,7 @@ class Joke {
          * retyrn fetch('https://api.icndb.com/jokes/random');
          */
 
-        return fetch('https://api-icndb-com.metalevel.tech/jokes/random')
+        return fetch('/api/jokes/random')
             .then(response => {
                 if (!response.ok)
                     throw new Error(
