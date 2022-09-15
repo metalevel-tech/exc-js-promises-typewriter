@@ -416,6 +416,7 @@ class Joke {
          *      This request has been blocked; the content must be served over HTTPS.
          * 
          * retyrn fetch('https://api.icndb.com/jokes/random');
+         * retyrn fetch('https://typewriter.metalevel.tech/api/jokes/random');
          */
 
         return fetch('/api/jokes/random')

@@ -461,6 +461,7 @@ class Joke {
              * const response = await fetch('https://api.icndb.com/jokes/random');
              * const response = await fetch('https://typewriter.metalevel.tech/api/jokes/random');
              */
+            
             const response = await fetch('/api/jokes/random');
             // if (!response.ok) throw new Error(`Network error: ${response}`);
 
