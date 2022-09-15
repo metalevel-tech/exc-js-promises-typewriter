@@ -450,7 +450,8 @@ class Joke {
 
     static async fetchJoke() {
         try {
-            const response = await fetch('https://api.icndb.com/jokes/random');
+            const response = await fetch('http://api.icndb.com/jokes/random');
+            // const response = await fetch('https://api.icndb.com/jokes/random');
             // if (!response.ok) throw new Error(`Network error: ${response}`);
 
             const data = await response.json();
