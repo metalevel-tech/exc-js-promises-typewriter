@@ -443,6 +443,7 @@ audio.player {
 .joke-source-name {
     font-family: 'Roboto Mono', monospace;
     margin: 1em 0 0;
+    font-size: 0.7em;
 }
 
 .output-image-shot-wrapper {
