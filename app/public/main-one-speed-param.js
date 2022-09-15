@@ -407,7 +407,18 @@ class Joke {
     static jokeList = [];
 
     static async fetchJoke() {
-        return fetch('https://api.icndb.com/jokes/random')
+        /**
+         * The SSL certificate of api.icndb.com have expired months ago, 
+         * so I've proxied it in order to mitigate the error message in the browser's console:
+         * 
+         *      main-two-speed-params.js:453 Mixed Content: The page at 'https://typewriter.metalevel.tech/' 
+         *      was loaded over HTTPS, but requested an insecure resource 'http://api.icndb.com/jokes/random'.
+         *      This request has been blocked; the content must be served over HTTPS.
+         * 
+         * retyrn fetch('https://api.icndb.com/jokes/random');
+         */
+
+        return fetch('https://api-icndb-com.metalevel.tech/jokes/random')
             .then(response => {
                 if (!response.ok)
                     throw new Error(

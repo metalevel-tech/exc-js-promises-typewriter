@@ -500,8 +500,9 @@ class Joke {
                 // console.error(`We have a problem at newJoke(): ${error}`);
 
                 if (error.message === 'API fetch error') {
-                    nodes.jokeSourceName.style.color = 'red';
-                    nodes.jokeSourceName.textContent += ' ...API fetch problem!';
+                    // nodes.jokeSourceName.style.color = 'red';
+                    // nodes.jokeSourceName.textContent += ' ...API fetch problem!';
+                    setTimeout(() => { this.newJoke(); }, 500);
                 } else {
                     setTimeout(() => { this.newJoke(); }, 500);
                 }
