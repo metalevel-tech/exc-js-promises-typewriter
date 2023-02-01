@@ -33,3 +33,8 @@ Additional references:
 * [MDN: JS Sequencing animations](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Sequencing_animations)
 
 * [**GitHub Pages Deploy** Reference](https://github.com/metalevel-tech/exc-js-react-tic-tac-toe)
+
+    ```bash
+    cd app
+    npm run deploy
+    ```
