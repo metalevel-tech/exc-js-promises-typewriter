@@ -281,7 +281,7 @@ class Joke {
         }
 
         // Fix some problems in the text of the joke
-        console.log(this)
+        // console.log(this)
         const text = this.value.replace(/&quot;/g, '"');
 
         // Process the text of the joke as an array of characters...
@@ -344,7 +344,7 @@ class Joke {
 
         outputJoke.dataset.index = this.index;
         outputJokeId.textContent = this.id;
-        outputJokeIndex.textContent = this.index + 1;
+        outputJokeIndex.textContent = this.index;
         outputJoke.style.fontSize = `${this.fontSize}px`;
     }
 
@@ -467,8 +467,6 @@ class Joke {
              */
             
             const response = await fetch('https://api.chucknorris.io/jokes/random');
-            // const response = await fetch('/api/jokes/random');
-            // if (!response.ok) throw new Error(`Network error: ${response}`);
             
             const data = await response.json();
 
@@ -546,7 +544,7 @@ class Joke {
             // just call: jokes[currentJokeIndex].jokeType();
             const joke = jokes[currentJokeIndex];
 
-            outputJoke.innerHTML = joke.joke;
+            outputJoke.innerHTML = joke.value;
             outputJoke.style.fontSize = `${joke.fontSize}px`;
 
             joke.displayVisibleData();
