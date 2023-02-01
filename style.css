@@ -1,0 +1,532 @@
+/* https://www.1001fonts.com/erika-ormig-font.html
+@font-face {
+    font-family: "Erika Ormig Regular";
+    src: url('./assets/fonts/erika-ormig.regular.ttf');
+} */
+
+/* https://www.fontsquirrel.com/fonts/Harting
+@font-face {
+    font-family: "Harting";
+    src: url('./assets/fonts/harting_plain.ttf');
+} */
+
+/* https://www.fontsquirrel.com/fonts/Harting */
+@font-face {
+    font-family: "Veteran";
+    src: url('./assets/fonts/veteran-typewriter.regular.ttf');
+}
+
+* {
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    overflow-y: scroll;
+    display: block;
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Roboto Slab', serif;
+}
+
+/** ScrollBar **/
+*::-webkit-scrollbar {
+    width: 18px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 2px;
+    border: 5px solid #eee;
+    border-radius: 12px;
+}
+
+*::-webkit-scrollbar-thumb:vertical:hover {
+    background: #bb85d6aa;
+}
+
+/** ScrollBar **/
+.output-image-shot-wrapper>*:first-child,
+.container>*:first-child,
+form>*:first-child {
+    margin-top: 0;
+}
+
+.container>*:last-child,
+form>*:last-child {
+    margin-bottom: 0;
+}
+
+.container:not(:empty),
+.auto-width-content:not(:empty) {
+    padding: 1em;
+    border: 1px solid #ddd;
+    width: auto;
+}
+
+.auto-width-content:not(:empty) {
+    margin-top: 1em;
+}
+
+.container:not(:empty) {
+    max-width: 560px;
+    min-width: 200px;
+    margin: 1em auto;
+}
+
+.container.error {
+    background-color: rgba(255, 48, 41, 0.082);
+    color: red;
+}
+
+.container.success {
+    background-color: #04aa6d31;
+    color: green;
+}
+
+/* #output {
+    display: none;
+} */
+#info {
+    position: relative;
+    user-select: none;
+}
+
+.cookie-banner {
+    font-size: .64em;
+    /* opacity: .8; */
+    text-align: right;
+    font-family: 'Roboto Mono', monospace;
+    color: #888;
+    float: right;
+    clear: right;
+}
+
+/* Full-width input fields */
+input[type=text],
+input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* Clear floats inside */
+.clearfix::after {
+    content: " ";
+    display: block;
+    width: 100%;
+    clear: both;
+}
+
+input[type=text]:focus,
+input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.btn,
+.login-btn,
+.register-btn {
+    /* background-color: #04AA6D; */
+    background-color: #aa66ccdd;
+
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.8;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 1em;
+    user-select: none;
+}
+
+.btn:hover,
+.login-btn:hover,
+.register-btn:hover {
+    opacity: 1;
+    transition: opacity .5s;
+}
+
+.btn {
+    margin: 0;
+}
+
+.btn.gray-btn {
+    background-color: #f5f5f5;
+    /* border: 1px solid #ddd; */
+    color: #555;
+    opacity: 1;
+}
+
+.btn.gray-btn:hover {
+    background-color: #555;
+    /* border: 1px solid #ddd; */
+    color: #f5f5f5;
+    transition: background-color .3s;
+}
+
+/* Left/Right Arrow buttons */
+.left-arrow,
+.right-arrow {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 80%;
+    /* height: 1rem; */
+    width: 4rem;
+}
+
+.left-arrow {
+    background-image: url('./assets/left.svg');
+    /* float: left; */
+}
+
+.right-arrow {
+    background-image: url('./assets/right.svg');
+    /* float: right; */
+}
+
+/* Add a blue text color to links */
+a {
+    color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.sign-in {
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+/* Grid model of the navigation buttons */
+.grid-container {
+    display: grid;
+    grid-template-areas: 'navBtnLeft navCenter navBtnRight';
+    grid-template-columns: 4rem auto 4rem;
+    column-gap: 1em;
+    /* row-gap: 1em; */
+}
+
+.nav-btn-left {
+    grid-area: navBtnLeft;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-center {
+    grid-area: navCenter;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    display: flex;
+    /* Enable flex-box to align the content*/
+    justify-content: center;
+    /* align horizontal */
+    align-items: center;
+    /* align vertical */
+}
+
+.nav-btn-right {
+    grid-area: navBtnRight;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* fit the content of the .container element to the image-container, joke-container, etc... */
+/* image container */
+.image-container {
+    width: 560px;
+    height: 560px;
+    margin: 1em 0;
+
+    border: 1px solid #eee;
+    border-radius: .6em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    /* background-position: -2px -2px;
+    background-repeat: no-repeat;
+    background-size: calc(100% + 4px); */
+
+    cursor: pointer;
+    transform: scale(1.005);
+}
+
+.auto-width-content {
+    display: table-caption;
+    caption-side: bottom;
+}
+
+.container {
+    width: fit-content;
+    width: -webkit-fit-content;
+    display: table;
+}
+
+.image-container img.cover {
+    width: 100%;
+    width: -webkit-fill-available;
+    height: auto;
+}
+
+.joke-container {
+    width: 560px;
+    height: 200px;
+    /* margin: 1em 0; */
+    margin: 0;
+
+    border: 1px solid #eee;
+    border-radius: .6em;
+
+    overflow: hidden;
+}
+
+.joke-canvas {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.joke-canvas {
+    margin: 0;
+    padding: 0;
+}
+
+/* .joke-canvas::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 560px;
+    height: 560px;
+    z-index: -1;
+    background-color: rgba(200, 200, 200, 1);
+    background-image: url('./assets/joke-canvas.jpg');
+    background-position: left top;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    opacity: .8;
+} */
+
+.joke-canvas-after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 560px;
+    height: 560px;
+    z-index: -1;
+    opacity: .8;
+}
+
+.joke-container pre.joke {
+    width: fit-content;
+    width: -webkit-fit-content;
+    padding: 8px 16px;
+    margin: 0;
+    font-family:  'Veteran', 'Roboto Mono', monospace;
+    white-space: pre-wrap;
+    text-align: left;
+    line-height: 1.6;
+    /* background-color: green; */
+    /* color: white; */
+    font-size: 1.6em;
+    font-weight: 400;
+    letter-spacing: 2.6px;
+}
+
+.joke span {
+    display: block;
+    width: 100%;
+    text-align: right;
+}
+
+/* audio player */
+audio.player {
+    float: right;
+    clear: right;
+    transform: scale(.8);
+    transform-origin: 100% 0;
+}
+
+/* Auto play switch, etc... */
+.switches {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+}
+
+.switch {
+    display: inline-block;
+}
+
+.img-switch,
+.auto-play,
+.sound-switch,
+.lyrics-switch {
+    background-repeat: no-repeat;
+    background-position: right;
+    font-family: 'Roboto Mono', monospace;
+    background-size: auto 90%;
+    width: -webkit-fit-content;
+    padding-right: 1.8em;
+    /* margin: 1em 0; */
+    transform: scale(.95);
+    transform-origin: 100%;
+    margin-right: .2em;
+    user-select: none;
+    cursor: pointer;
+    opacity: .8;
+    height : 20px;
+}
+
+/* .img-switch,
+.auto-play {
+    float: right;
+    clear: right;
+}
+
+.sound-switch,
+.lyrics-switch {
+    float: right;
+    margin-right: 1em;
+} */
+
+.switch-on {
+    color: #aa66cc;
+    background-image: url('./assets/switch-on.svg');
+}
+
+.switch-off {
+    color: #ccc;
+    background-image: url('./assets/switch-off.svg');
+}
+
+/* Joke */
+.joke-source {
+    margin: 0;
+    font-size: 1.8em;
+    color: #444;
+}
+
+.joke-source-name {
+    font-family: 'Roboto Mono', monospace;
+    margin: 1em 0 0;
+    /* font-size: 0.7em; */
+}
+
+.output-image-shot-wrapper {
+    overflow: hidden;
+    margin-bottom: 1em;
+}
+
+.joke-image-shot-link,
+.joke-source-name a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.joke-image-shot-link {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    /* height: fit-content; */
+    /* height: auto; */
+    height: 216px;
+    overflow: hidden;
+    display: block;
+}
+
+.joke-image-shot {
+    margin: 1em 0 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    
+    border-radius: .6em;
+    opacity: .9;
+}
+.joke-image-shot:hover {
+    background-color: #ffc10722;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Artist and Song data */
+/* .joke-info,
+.album-section {
+    float: left;
+} */
+
+.artist-name {
+    margin: 0;
+    font-size: 1.8em;
+    color: #444;
+}
+
+.album-name {
+    margin: .6em 0 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1em;
+    /* font-style: italic; */
+    color: #777;
+}
+
+.song-section {
+    clear: both;
+    padding: .5em 0 0;
+}
+
+.song-section>*:last-child {
+    margin-bottom: 0;
+}
+
+.song-name {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.song-lyrics {
+    font-family: 'Roboto', sans-serif;
+    font-size: .9em;
+    font-weight: 400;
+    margin-top: 1em;
+    line-height: 1.6;
+    display: none;
+}

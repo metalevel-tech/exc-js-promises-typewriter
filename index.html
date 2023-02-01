@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" href="./favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="./mlt.favicon.green.svg" />
+
+    <title>Tell me a joke</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto+Slab:wght@400;500;600;700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet" crossorigin>
+    <!--
+        font-family: 'Roboto', sans-serif;
+        font-family: 'Roboto Mono', monospace;
+        font-family: 'Roboto Slab', serif;
+    -->
+
+    <link rel="stylesheet" href="./style.css">
+    <!-- <script src="./assets/dom-to-image.min.js"></script> -->
+    <!-- <script src="./main-one-speed-param.js" defer></script> -->
+    <script src="./main-two-speed-params.js" defer></script>
+    <!-- <script type="module" src="./main.js"></script> -->
+</head>
+
+<body>
+    <div class="container clearfix">
+        <div class="output-image-shot-wrapper">
+            <div id="output" class="joke-container">
+                <div class="joke-canvas">
+                    <pre class="joke"
+                        data-index="">Click on the buttons or press the [space] key to start. You cannot interrupt the typing process, byt you can turn off the autoplay mode. Then use the arrow buttons or key to read already fetched jokes or press space or click on the middle button to fetch new.</pre>
+                    <img src="./assets/joke-canvas.jpg" alt="" class="joke-canvas-after">
+                </div>
+            </div>
+        </div>
+        <script>
+            // This is just an initial resize of the font size, to make the page fit the container.
+            // main.js:Joke.prototype.fitJokeToContainer() does such resize over the particular jokes.
+            (function() {
+                const outputContainer = document.querySelector('#output.joke-container');
+                const outputJoke = document.querySelector('#output pre.joke');
+    
+                function fitJokeToContainer() { 
+                    const containerHeight = parseFloat(
+                        window.getComputedStyle(outputContainer, null).getPropertyValue('height')
+                    );
+                    
+                    const jokeHeight = parseFloat(
+                        window.getComputedStyle(outputJoke, null).getPropertyValue('height')
+                    );
+            
+                    let jokeFontSize = parseFloat(
+                        window.getComputedStyle(outputJoke, null).getPropertyValue('font-size')
+                    );
+            
+                    if (jokeHeight >= containerHeight) {
+                        jokeFontSize -= 0.1;
+                        outputJoke.style.fontSize = `${jokeFontSize}px`;
+            
+                        fitJokeToContainer();
+                    }
+                }
+                fitJokeToContainer();
+            })();
+        </script>
+
+        <div class="nav grid-container">
+            <div class="btn left-arrow nav-btn-left">&nbsp;</div>
+            <div class="btn gray-btn nav-center">This is not a joke</div>
+            <div class="btn right-arrow nav-btn-right">&nbsp;</div>
+        </div>
+
+        <div id="info" class="auto-width-content">
+            <!-- <div class="switch auto-play switch-on" style="float:right">Autoplay</div> -->
+            <div class="switches clearfix">
+                <div class="switch sound-switch switch-on" title="On/Off Sound effects">Sound</div>
+                <div class="switch img-switch switch-on"
+                    title="On/Off Convert joke to image when the typewriter finish">Img</div>
+                <div class="switch auto-play switch-on"
+                    title="On/Off Auto load the next joke 5 seconds after the typewriter finish">Autoplay</div>
+                <br>
+                <div class="cookie-banner" style="margin-top: 8px;">This site uses functional cookies.</div>
+            </div>
+
+            <div class="joke-info">
+                <h1 class="joke-source">Joke #<span class="joke-index">0</span> <span style="display:none;">Id:<span class="joke-id">0</span></span></h1>
+                <p class="joke-source-name">
+                    <!-- <a href="http://api.icndb.com/jokes/random">http://api.icndb.com/jokes/random</a> (<a href="/api/jokes/random">HTTPS Proxy</a>) -->
+                    <a href="https://api.chucknorris.io/jokes/random">https://api.chucknorris.io/jokes/random</a> 
+                </p>
+            </div>
+
+            <a href="./assets/joke-0.png" class="joke-image-shot-link" title="Click to download the image." download>
+                <img src="./assets/joke-0.png" alt="Last image shot" class="joke-image-shot">
+            </a>
+
+        </div>
+    </div>
+</body>
+
+</html>
