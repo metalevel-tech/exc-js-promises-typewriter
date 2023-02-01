@@ -283,7 +283,6 @@ class Joke {
             })
             .catch(error => { throw new Error(`Animate error: ${error}`); });
 
-
         // Apply the sound preferences
         typewriter.soundOnOff();
         // Play the main typewriter sound effect
@@ -415,11 +414,15 @@ class Joke {
          *      was loaded over HTTPS, but requested an insecure resource 'http://api.icndb.com/jokes/random'.
          *      This request has been blocked; the content must be served over HTTPS.
          * 
-         * retyrn fetch('https://api.icndb.com/jokes/random');
-         * retyrn fetch('https://typewriter.metalevel.tech/api/jokes/random');
+         * return fetch('https://api.icndb.com/jokes/random');
+         * return fetch('https://typewriter.metalevel.tech/api/jokes/random');
+         * 
+         * There is a new API available, so we don't need to proxy...
+         *  ...api.icndb.com, which doesn't work at all:
          */
 
-        return fetch('/api/jokes/random')
+        // return fetch('/api/jokes/random')
+        return fetch('https://api.chucknorris.io/jokes/random')
             .then(response => {
                 if (!response.ok)
                     throw new Error(

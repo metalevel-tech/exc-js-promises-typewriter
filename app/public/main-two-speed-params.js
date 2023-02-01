@@ -281,7 +281,8 @@ class Joke {
         }
 
         // Fix some problems in the text of the joke
-        const text = this.joke.replace(/&quot;/g, '"');
+        console.log(this)
+        const text = this.value.replace(/&quot;/g, '"');
 
         // Process the text of the joke as an array of characters...
         for (const index in text) {
@@ -460,19 +461,23 @@ class Joke {
              * 
              * const response = await fetch('https://api.icndb.com/jokes/random');
              * const response = await fetch('https://typewriter.metalevel.tech/api/jokes/random');
+             * 
+             * There is a new API available, so we don't need to proxy...
+             *  ...api.icndb.com, which doesn't work at all:
              */
             
-            const response = await fetch('/api/jokes/random');
+            const response = await fetch('https://api.chucknorris.io/jokes/random');
+            // const response = await fetch('/api/jokes/random');
             // if (!response.ok) throw new Error(`Network error: ${response}`);
-
+            
             const data = await response.json();
 
-            if (this.jokeList.find(joke => joke.id === data.value.id)) {
+            if (this.jokeList.find(joke => joke.id === data.id)) {
                 this.fetchJoke(); // We have already fetched this joke, so we fetch another one
             } else {
-                const joke = Object.assign(new Joke(), data.value);
+                const joke = Object.assign(new Joke(), data);
                 const jokeListLength = this.jokeList.push(joke);
-
+                
                 return new Promise((resolve, reject) => {
                     // return the index of the last element
                     resolve(jokeListLength - 1);
@@ -500,7 +505,7 @@ class Joke {
                 }
             } catch (error) {
                 // console.error(`We have a problem at newJoke(): ${error}`);
-
+                // console.log(error)
                 if (error.message === 'API fetch error') {
                     // nodes.jokeSourceName.style.color = 'red';
                     // nodes.jokeSourceName.textContent += ' ...API fetch problem!';

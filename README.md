@@ -31,3 +31,5 @@ Additional references:
 * [MDN: JS How to implement a promise-based API](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Implementing_a_promise-based_API)
 
 * [MDN: JS Sequencing animations](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Sequencing_animations)
+
+* [**GitHub Pages Deploy** Reference](https://github.com/metalevel-tech/exc-js-react-tic-tac-toe)
