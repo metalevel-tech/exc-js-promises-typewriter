@@ -16,7 +16,9 @@ const nodes = {
 
     autoplaySwitch: document.querySelector('.auto-play'),
     soundSwitch: document.querySelector('.sound-switch'),
-    imageSwitch: document.querySelector('.img-switch')
+    imageSwitch: document.querySelector('.img-switch'),
+
+    jokeSourceName: document.querySelector('#info .joke-source-name a')
 };
 
 const effectFadeOut = {
@@ -186,67 +188,107 @@ class Joke {
         await this.canvasPrepare();
 
         // Set the typewriter parameters
-        const speed = 120;
+        const speed = 60;
+        const interval = 100;
+        let even = false;
+        let calculatedSpeed = speed / 1.5;
 
         // Function to display one character at a time
-        const typeSingleCharacter = (char, index, array) => {
+        const typeSingleCharacter = async (char, index, array) => {
             // This is the main function
-            outputJoke.innerHTML += char;
-
-            // Fit the long jokes to the container by decreasing the font size,
-            // and play sound effect at new line
-            this.fitJokeToContainer();
-            this.newLineDetect();
-
-            // If it is the last charter do additional tasks
-            if (index === array.length - 1) {
-                typewriter.type.audio.pause();
-                typewriter.type.audio.currentTime = 0;
-                typewriter.lineReturn.audio.play();
-                typewriter.keyStroke.audio.play();
-
-                // Unlock the new joke button 1 second later
-                setTimeout(() => {
-                    // typewriter.lineReturn.audio.pause();
-                    typewriter.type.audio.pause();
-                    typewriter.keyStroke.audio.pause();
-
-                    newJokeButton.resolve = true;
-                    const btnMessage = newJokeButton.msgs[
-                        Math.random() * newJokeButton.msgs.length | 0
-                    ];
-                    nodes.btnShow.textContent = btnMessage;
-
-
-                    setTimeout(() => {
-                        if (localStorage.getItem('imageOnOff') === 'on') this.generateImage();
-                    }, 100);
-                }, 1000);
-
-                // Call new joke in autoplay mode
-                setTimeout(() => {
-                    if (localStorage.getItem('autoPlayOnOff') === 'on') Joke.newJoke();
-                }, 5000);
-            } else {
-                // Bind the sound effects more close to the displayed text
-                if (char.match(/[.?!:,-/#"']/)) {
-                    typewriter.type.audio.currentTime = 0.08;
-                    typewriter.keyStroke.audio.play();
+            await new Promise(resolve => {
+                const currentText = outputJoke.innerHTML;
+                if (char.match(/\s|[;'.,]/)) {
+                    outputJoke.innerHTML += '|';
+                    calculatedSpeed = speed / 1.5;
+                } else {
+                    outputJoke.innerHTML += '_';
+                    calculatedSpeed = speed;
                 }
-                if (char.match(/[skfNVI0-9]/)) {
-                    typewriter.type.audio.currentTime = 0.1;
-                    typewriter.keyStroke.audio.play();
-                }
-            }
+
+                this.fitJokeToContainer();
+                this.newLineDetect();
+
+                setTimeout(() => {
+                    outputJoke.innerHTML = currentText + char;
+
+                    this.fitJokeToContainer();
+                    this.newLineDetect();
+
+                    // If it is the last charter do additional tasks
+                    if (Number(index) === array.length - 1) {
+                        typewriter.type.audio.pause();
+                        typewriter.type.audio.currentTime = 0;
+                        typewriter.lineReturn.audio.play();
+                        typewriter.keyStroke.audio.play();
+
+                        // Unlock the new joke button 1 second later
+                        setTimeout(() => {
+                            // typewriter.lineReturn.audio.pause();
+                            typewriter.type.audio.pause();
+                            typewriter.keyStroke.audio.pause();
+
+                            newJokeButton.resolve = true;
+                            const btnMessage = newJokeButton.msgs[
+                                Math.random() * newJokeButton.msgs.length | 0
+                            ];
+                            nodes.btnShow.textContent = btnMessage;
+
+
+                            setTimeout(() => {
+                                if (localStorage.getItem('imageOnOff') === 'on') this.generateImage();
+                            }, 100);
+                        }, 1000);
+
+                        // Call new joke in autoplay mode
+                        setTimeout(() => {
+                            if (localStorage.getItem('autoPlayOnOff') === 'on') Joke.newJoke();
+                        }, 5000);
+                    } else {
+                        // Bind the sound effects more close to the displayed text
+                        if (char.match(/[.?!:,-/#"']/)) {
+                            typewriter.type.audio.currentTime = 0.08;
+                            typewriter.keyStroke.audio.play();
+                        } else if (char.match(/[skfNVI0-9]/)) {
+                            typewriter.type.audio.currentTime = 0.1;
+                            typewriter.keyStroke.audio.play();
+                        } else if (char.match(/\s/)) {
+                            if (even) {
+                                typewriter.type.audio.currentTime = 0.1;
+                                typewriter.keyStroke.audio.play();
+                                even = false;
+                            } else if (!even) {
+                                typewriter.type.audio.currentTime = 0.4;
+                                typewriter.keyStroke.audio.currentTime = 0.08;
+                                typewriter.keyStroke.audio.play();
+                                even = true;
+                            }
+                        }
+                    }
+
+                    resolve(`Resolve: ${char}`);
+                }, calculatedSpeed);
+            });
+
+            await new Promise(resolve => {
+                this.fitJokeToContainer();
+                this.newLineDetect();
+
+                setTimeout(() => {
+                    resolve(`Resolve: ${char}, with index: ${index}; array length: ${array.length}`);
+                }, interval);
+            });
         }
-        
+
         // Fix some problems in the text of the joke
-        const text = this.joke.replace(/&quot;/g, '"');
+        // console.log(this)
+        const text = this.value.replace(/&quot;/g, '"');
 
         // Process the text of the joke as an array of characters...
-        [...text].forEach((char, index, array) => {
-            setTimeout(() => { typeSingleCharacter(char, index, array) }, index * speed);
-        });
+        for (const index in text) {
+            await typeSingleCharacter(text[index], index, text);
+            // .then(response => {console.log(response)});
+        }
     }
 
     async canvasPrepare() {
@@ -283,6 +325,7 @@ class Joke {
             })
             .catch(error => { throw new Error(`Animate error: ${error}`); });
 
+
         // Apply the sound preferences
         typewriter.soundOnOff();
         // Play the main typewriter sound effect
@@ -301,7 +344,7 @@ class Joke {
 
         outputJoke.dataset.index = this.index;
         outputJokeId.textContent = this.id;
-        outputJokeIndex.textContent = this.index + 1;
+        outputJokeIndex.textContent = this.index;
         outputJoke.style.fontSize = `${this.fontSize}px`;
     }
 
@@ -362,6 +405,7 @@ class Joke {
             // Generate the image if it doesn't exist
             if (!this.image) {
                 // Deploy the 'dom-to-image' script if it doesn't exist
+                //  it will make the 'domtoimage' variable available in the global scope.
                 if (!document.querySelector('head #dom-to-image')) {
                     await fetch('./assets/dom-to-image.min.js')
                         .then(response => {
@@ -406,59 +450,67 @@ class Joke {
     static jokeList = [];
 
     static async fetchJoke() {
-        /**
-         * The SSL certificate of api.icndb.com have expired months ago, 
-         * so I've proxied it in order to mitigate the error message in the browser's console:
-         * 
-         *      main-two-speed-params.js:453 Mixed Content: The page at 'https://typewriter.metalevel.tech/' 
-         *      was loaded over HTTPS, but requested an insecure resource 'http://api.icndb.com/jokes/random'.
-         *      This request has been blocked; the content must be served over HTTPS.
-         * 
-         * return fetch('https://api.icndb.com/jokes/random');
-         * return fetch('https://typewriter.metalevel.tech/api/jokes/random');
-         * 
-         * There is a new API available, so we don't need to proxy...
-         *  ...api.icndb.com, which doesn't work at all:
-         */
+        try {
+            /**
+             * The SSL certificate of api.icndb.com have expired months ago, 
+             * so I've proxied it in order to mitigate the error message in the browser's console:
+             * 
+             *      main-two-speed-params.js:453 Mixed Content: The page at 'https://typewriter.metalevel.tech/' 
+             *      was loaded over HTTPS, but requested an insecure resource 'http://api.icndb.com/jokes/random'.
+             *      This request has been blocked; the content must be served over HTTPS.
+             * 
+             * const response = await fetch('https://api.icndb.com/jokes/random');
+             * const response = await fetch('https://typewriter.metalevel.tech/api/jokes/random');
+             * 
+             * There is a new API available, so we don't need to proxy...
+             *  ...api.icndb.com, which doesn't work at all:
+             */
+            
+            const response = await fetch('https://api.chucknorris.io/jokes/random');
+            
+            const data = await response.json();
 
-        // return fetch('/api/jokes/random')
-        return fetch('https://api.chucknorris.io/jokes/random')
-            .then(response => {
-                if (!response.ok)
-                    throw new Error(
-                        `Network error: ${response.status} ${response.statusText}`
-                    );
-                return response.json();
-            })
-            .then(data => {
-                if (this.jokeList.find(joke => joke.id === data.value.id)) {
-                    this.fetchJoke(); // We have already fetched this joke, so we fetch another one
-                } else {
-                    const joke = Object.assign(new Joke(), data.value);
-                    const jokeListLength = this.jokeList.push(joke);
+            if (this.jokeList.find(joke => joke.id === data.id)) {
+                this.fetchJoke(); // We have already fetched this joke, so we fetch another one
+            } else {
+                const joke = Object.assign(new Joke(), data);
+                const jokeListLength = this.jokeList.push(joke);
+                
+                return new Promise((resolve, reject) => {
+                    // return the index of the last element
+                    resolve(jokeListLength - 1);
+                });
+            }
+        }
+        catch (error) {
+            // console.error(`We have a problem at fetchJoke(): ${error.message}`);
 
-                    return new Promise((resolve, reject) => {
-                        // return the index of the last element
-                        resolve(jokeListLength - 1);
-                    });
-                }
-
-            })
-            .catch(error => {
-                console.error(`We have a problem at fetchJoke(): ${error}`);
+            return new Promise((resolve, reject) => {
+                // return the index of the last element
+                resolve(false);
             });
+        }
     }
 
     static async newJoke() {
         if (newJokeButton.resolve) {
             try {
                 const lastElementIndex = await this.fetchJoke();
-                this.jokeList[lastElementIndex].jokeType();
+                if (lastElementIndex) {
+                    this.jokeList[lastElementIndex].jokeType();
+                } else {
+                    throw new Error('API fetch error');
+                }
             } catch (error) {
                 // console.error(`We have a problem at newJoke(): ${error}`);
-                setTimeout(() => {
-                    this.newJoke();
-                }, 100);
+                // console.log(error)
+                if (error.message === 'API fetch error') {
+                    // nodes.jokeSourceName.style.color = 'red';
+                    // nodes.jokeSourceName.textContent += ' ...API fetch problem!';
+                    setTimeout(() => { this.newJoke(); }, 500);
+                } else {
+                    setTimeout(() => { this.newJoke(); }, 500);
+                }
             }
         }
     }
@@ -492,7 +544,7 @@ class Joke {
             // just call: jokes[currentJokeIndex].jokeType();
             const joke = jokes[currentJokeIndex];
 
-            outputJoke.innerHTML = joke.joke;
+            outputJoke.innerHTML = joke.value;
             outputJoke.style.fontSize = `${joke.fontSize}px`;
 
             joke.displayVisibleData();
